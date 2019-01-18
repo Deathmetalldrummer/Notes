@@ -1,0 +1,62 @@
+//container
+%container_size
+	font-size: 0
+	&>*
+		font-size: 16px
+		font-size: 1rem
+%container_left
+	@extend %container_size
+	margin-left: 0
+	margin-right: auto
+%container_right
+	@extend %container_size
+	margin-right: 0
+	margin-left: auto
+%container_center
+	@extend %container_size
+	margin-left: auto
+	margin-right: auto
+%container
+	@extend %container_center
+//column
+%col
+	display: inline-block
+%col_middle
+	@extend %col
+	vertical-align: middle
+%col_top
+	@extend %col
+	vertical-align: top
+%col_bottom
+	@extend %col
+	vertical-align: bottom
+%grid
+	@extend %col_top
+
+@function grid_width($_width,$_columns)
+	@if unitless($_width)
+		@if $_width > $_columns
+			@return 100%
+		@return (100% / $_columns) * $_width
+	@else
+		@return $_width
+
+//*====GRID SETTING====*/
+$grid_setting: (gutter: 15px,columns: 12)
+
+
+//*====GRID SYSTEM====*/
+=container($_width: 100%, $_align: center)
+	@extend %container_#{$_align}
+	@if $_width
+		width: $_width
+
+=grid($_width: 100%, $_vertical: top, $_setting: $grid_setting)
+	$_columns: map-get($_setting, columns)
+	$_gutter: map-get($_setting, gutter)
+	@extend %col_#{$_vertical}
+	@if $_width
+		width: grid_width($_width,$_columns)
+	@if $_gutter
+		padding-left: $_gutter
+		padding-right: $_gutter

@@ -1,0 +1,44 @@
+@function grid_width($_width,$_columns)
+	@if unitless($_width)
+		@if $_width > $_columns
+			@return 100%
+		@return (100% / $_columns) * $_width
+	@else
+		@return $_width
+
+$grid_setting: (columns: 12,gutter: false)
+
+=container($_width: false, $_align: center)
+	@if $_width
+		width: $_width
+	font-size: 0
+	&>*
+		display: inline-block
+		font-size: 16px
+		font-size: 1rem
+	@if $_align == center
+		// margin-right: auto
+		// margin-left: auto
+		margin: auto
+	@if $_align == left
+		margin-right: 0
+		margin-left: auto
+	@if $_align == right
+		margin-right: auto
+		margin-left: 0
+
+=grid($_width: 100%, $_vertical: top, $_setting: $grid_setting)
+	$_columns: map-get($_setting, columns)
+	$_gutter: map-get($_setting, gutter)
+	@if $_width
+		width: grid_width($_width,$_columns)
+	@if $_vertical
+		vertical-align: $_vertical
+	@if $_gutter
+		padding-left: $_gutter
+		padding-right: $_gutter
+@function get_w($_width: 100%,$_setting: $grid_setting)
+	$_columns: map-get($_setting, columns)
+	$_gutter: map-get($_setting, gutter)
+	@if $_width
+		@return grid_width($_width,$_columns)
