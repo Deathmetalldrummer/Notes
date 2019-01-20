@@ -7,6 +7,13 @@ html(lang="en")
 		link(rel="stylesheet", href="./index.css")
 		title Archetype
 	body
+		#wrapper
+			#menu
+			#create
+				button.create_folder folder+
+				button.del_folder folder-
+				button.create_file file+
+				button.del_file file-
 		include ./_layout/_header/_header
 		include ./_layout/_footer/_footer
 		script(src='../../bower_components/jquery/dist/jquery.js')

@@ -4,6 +4,7 @@
 // Конструктор директорий
 function folder(obj) {
 	this.id = obj.id;
+	this.type = 'folder';
 	this.name = obj.name || "Folder name";
 	this.desc = obj.desc || "Folder desc";
 	this.image = obj.image || "Folder image";
@@ -14,6 +15,7 @@ function folder(obj) {
 // Конструктор файлов
 function file(obj) {
 	this.id = obj.id;
+	this.type = 'file';
 	this.name = obj.name || "File name";
 	this.desc = obj.desc || "File desc";
 	this.image = obj.image || "File image";
@@ -21,7 +23,6 @@ function file(obj) {
 	this.parent_id = obj.parent_id;
 }
 
-var focus_id = null;
 var arch = {};
 var localStorage_object_name = 'arch';
 
@@ -29,89 +30,162 @@ var localStorage_object_name = 'arch';
 
 $(document).ready(function() {
 	get_local();
-	console.log(arch);
+	create_menu();
+	focus_event();
 });
 
 
 /*
 Глубокий поиск
-Ищет объект со свойством "id" и значением id (первый параметр) в объекте x (второй параметр)
+Ищет объект со свойством "id" и значением id (первый параметр)
 Возвращает объект
 */
-function finder(id, x) {
-	var where = x || arch;
-	if (isObject(where)) {
-		for (var prop in where) {
-			if (where.hasOwnProperty(prop)) {
-				if (prop === 'id' && where[prop] === id) {
-					console.log(where);
-				} else {
-					finder(id, where[prop]);
+function finder(id) {
+	var res;
+
+	req(arch);
+
+	function req(param) {
+		if (is_Object(param)) {
+			if (param.hasOwnProperty('id') && param.id === id) {
+				res = param;
+			}
+			for (var prop in param) {
+				if (param.hasOwnProperty(prop) && is_Array(param[prop]) && param[prop].length) {
+					req(param[prop]);
 				}
 			}
 		}
-	}
-	if (isArray(where)) {
-		for (var prop = 0; prop < where.length; prop++) {
-			finder(id, where[prop]);
+		if (is_Array(param)) {
+			for (var prop = 0; prop < param.length; prop++) {
+				req(param[prop]);
+			}
 		}
 	}
+	return res;
+}
+function finderId(obj) {
+	var res = [];
+
+	req(obj);
+
+	function req(param) {
+		if (is_Object(param)) {
+			if (param.hasOwnProperty('id')) {
+				res.push(param.id)
+			}
+			for (var prop in param) {
+				if (param.hasOwnProperty(prop) && is_Array(param[prop]) && param[prop].length) {
+					req(param[prop]);
+				}
+			}
+		}
+		if (is_Array(param)) {
+			for (var prop = 0; prop < param.length; prop++) {
+				req(param[prop]);
+			}
+		}
+	}
+	console.log(res);
+	return res;
 }
 
+
+
 // Отвечает за кад проверки объекта
-function isObject(x) {
+function is_Object(x) {
 	return $.isPlainObject(x);
 }
 // Отвечает за кад проверки массива
-function isArray(x) {
+function is_Array(x) {
 	return $.isArray(x);
+}
+// Отвечает за кад проверки на число
+function is_Numeric(x) {
+	return $.isNumeric(x);
 }
 
 //Создает файл
 function createFile(parent_id) {
-	var x = parent_id ? finder(parent_id) : arch;
-	var obj = {
-		id: createFileId(),
-		parent_id: (parent_id ? parent_id : localStorage_object_name)
-	};
-	x.files.push(new file(obj));
-	set_local();
+	var x = (parent_id>=0) ? finder(parent_id) : arch;
+	if (x) {
+		var obj = {
+			id: createId(),
+			parent_id: ((parent_id>=0) ? parent_id : localStorage_object_name)
+		};
+		x.files.push(new file(obj));
+		arch = JSON.parse(JSON.stringify(arch));
+		set_local();
+		create_menu();
+	}
 }
 //Создает директорию
 function createFolder(parent_id) {
-	var x = parent_id ? finder(parent_id) : arch;
-	var obj = {
-		id: createFolderId(),
-		parent_id: (parent_id ? parent_id : localStorage_object_name)
-	};
-	x.folders.push(new folder(obj));
-	set_local();
+	var x = (parent_id>=0) ? finder(parent_id) : arch;
+	if (x) {
+		var obj = {
+			id: createId(),
+			parent_id: ((parent_id>=0) ? parent_id : localStorage_object_name)
+		};
+		x.folders.push(new folder(obj));
+		arch = JSON.parse(JSON.stringify(arch));//что это?почему!?нет ссылки на конструктор
+		set_local();
+		create_menu();
+	}
+}
+
+
+function delFolder(focus_id) {
+	if (focus_id >= 0) {
+		var focused = finder(focus_id);
+		var focus_parent = (is_Numeric(focused.parent_id)) ? finder(focused.parent_id) : arch;
+		var eq;
+		for (var i = 0; i < focus_parent.folders.length; i++) {
+			if (focus_parent.folders[i].id === focused.id) {
+				eq = i;
+				break;
+			}
+		}
+		focus_parent.folders.splice(eq,1);
+		removeId(focused);
+		set_local();
+		create_menu();
+	}
+}
+function delFile(focus_id) {
+	if (focus_id >= 0) {
+		var focused = finder(focus_id);
+		var focus_parent = (is_Numeric(focused.parent_id)) ? finder(focused.parent_id) : arch;
+		var eq;
+		for (var i = 0; i < focus_parent.files.length; i++) {
+			if (focus_parent.files[i].id === focused.id) {
+				eq = i;
+				break;
+			}
+		}
+		focus_parent.files.splice(eq,1);
+		removeId(focused);
+		set_local();
+		create_menu();
+	}
 }
 
 
 
-
-
-
-function createFileId() {
-	var arch_l = arch.files_id.length;
-	// if(!arch_l) 0;
+function createId() {
+	var arch_l = arch.id_list.length;
 	for (var i = 0; i <= arch_l; i++) {
-		if (arch.files_id.indexOf(i) === -1) {
-			arch.files_id.push(i);
+		if (arch.id_list.indexOf(i) === -1) {
+			arch.id_list.push(i);
 			return i;
 		}
 	}
 }
-
-function createFolderId() {
-	var arch_l = arch.folders_id.length;
-	// if(!arch_l) 0;
-	for (var i = 0; i <= arch_l; i++) {
-		if (arch.folders_id.indexOf(i) === -1) {
-			arch.folders_id.push(i);
-			return i;
-		}
+function removeId(id) {
+	var arch_l = arch.id_list;
+	var removed_list = finderId(id);
+	for (var i = 0; i < removed_list.length; i++) {
+		arch_l.splice(arch_l.indexOf(removed_list[i]),1);
 	}
 }
 
@@ -121,12 +195,80 @@ function get_local() {
 		arch = JSON.parse(string_local);
 	} else {
 		arch.folders = [];
-		arch.folders_id = []
 		arch.files = [];
-		arch.files_id = []
+		arch.id_list = [];
 	}
 }
-
 function set_local() {
 	localStorage.setItem(localStorage_object_name, JSON.stringify(arch));
+}
+
+
+
+function create_menu() {
+	$('#menu').html(menu_result(arch));
+	focus();
+}
+// возвращает строку из тэгов
+function menu_result(x) {
+	var res = $('<ul></ul>');
+	// перебираем пункты списка
+	for (var i = 0; i < x.folders.length; i++) {
+		// var subarch_res = $('<ul></ul>');
+		var x_item = x.folders[i];
+		// если есть подменю, запускает рекурсию и записывает результат в переменную
+		if ($.isArray(x.folders)) {
+			// формирует результат
+			var focus_class = ($('#menu .folder.focus').data('id') === x_item.id) ? 'focus' : '';
+			res.append($('<li class="folder '+focus_class+'" data-id=' + x_item.id + ' data-type="folder">' + x_item.name + '</li>').append(menu_result(x_item)));
+		}
+	}
+	for (var i = 0; i < x.files.length; i++) {
+		var x_item = x.files[i];
+		// если есть подменю, запускает рекурсию и записывает результат в переменную
+		if ($.isArray(x.files)) {
+			// формирует результат
+			var focus_class = ($('#menu .file.focus').data('id') === x_item.id) ? 'focus' : '';
+			res.append($('<li class="file '+focus_class+'" data-id=' + x_item.id + ' data-type="file">' + x_item.name + '</li>'));
+		}
+	}
+	// возвращает результат
+	return res;
+}
+
+function focus() {
+	$('.file').on('click', function(e) {
+		$('#menu .focus').removeClass('focus');
+		$(e.target).addClass('focus');
+	})
+	$('.folder').on('click', function(e) {
+		$('#menu .focus').removeClass('focus');
+		$(e.target).addClass('focus');
+	});
+}
+function focus_event() {
+	$('.create_folder').on('click', function(e) {
+		if ($('#menu .folder').hasClass('focus')) {
+			createFolder($('#menu .folder.focus').data('id'));
+		} else {
+			createFolder();
+		}
+	});
+	$('.del_folder').on('click', function(e) {
+		if ($('#menu .folder').hasClass('focus')) {
+			delFolder($('#menu .folder.focus').data('id'));
+		}
+	});
+	$('.create_file').on('click', function(e) {
+		if ($('#menu .folder').hasClass('focus')) {
+			createFile($('#menu .folder.focus').data('id'));
+		} else {
+			createFile();
+		}
+	});
+	$('.del_file').on('click', function(e) {
+		if ($('#menu .file').hasClass('focus')) {
+			delFile($('#menu .file.focus').data('id'));
+		}
+	});
 }
