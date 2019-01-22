@@ -86,7 +86,7 @@ function finderId(obj) {
 			}
 		}
 	}
-	console.log(res);
+	// console.log(res);
 	return res;
 }
 
@@ -111,7 +111,8 @@ function createFile(parent_id) {
 	if (x) {
 		var obj = {
 			id: createId(),
-			parent_id: ((parent_id>=0) ? parent_id : localStorage_object_name)
+			parent_id: ((parent_id>=0) ? parent_id : localStorage_object_name),
+			content: cryptoIn()
 		};
 		x.files.push(new file(obj));
 		arch = JSON.parse(JSON.stringify(arch));
@@ -240,6 +241,8 @@ function focus() {
 	$('.file').on('click', function(e) {
 		$('#menu .focus').removeClass('focus');
 		$(e.target).addClass('focus');
+		$('#content').html(cryptoOut(finder($('#menu .focus').data('id')).content));
+
 	})
 	$('.folder').on('click', function(e) {
 		$('#menu .focus').removeClass('focus');
@@ -271,4 +274,17 @@ function focus_event() {
 			delFile($('#menu .file.focus').data('id'));
 		}
 	});
+}
+function cryptoIn() {
+	return utf8_to_b64($('#menu').html());
+}
+function cryptoOut(x) {
+	return b64_to_utf8(x);
+}
+function utf8_to_b64(str) {
+	return window.btoa(unescape(encodeURIComponent(str)));
+}
+//декодирование строки из base-64 в Unicode
+function b64_to_utf8(str) {
+	return decodeURIComponent(escape(window.atob(str)));
 }

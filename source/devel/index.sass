@@ -4,13 +4,37 @@ body
 	margin: 0
 *
 	box-sizing: border-box
-#menu li.focus
-	color: #ff5555
-	ul
-		color: #000
+#create
+
+@import "./_module/_font/_font"
+@import "./_module/_grid/_grid"
+
+
+
+
+#wrapper
+	+container
+	height: 100vh
+#menu
+	+grid(3)
+	height: 100%
+	background-color: rgb(59, 59, 59)
+	color: #fff
+	li.focus
+		color: #ff3f25
+		ul
+			color: #fff
+#content
+	+grid(9)
+	height: 100%
 #create
 	position: fixed
 	top: 20px
 	right: 50%
-@import "./_module/_font/_font"
-@import "./_module/_grid/_grid"
+	button
+		padding: 10px
+		margin: 3px
+	.create_folder
+	.del_folder
+	.create_file
+	.del_file
