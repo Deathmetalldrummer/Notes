@@ -1,0 +1,55 @@
+$drawers_left_width: 2.5
+$drawers_right_width: 4
+$drawers_transition_duration: 0.3s
+$drawers_left_bg_color: rgb(59, 59, 59)
+$drawers_right_bg_color: $drawers_left_bg_color
+.drawers
+	+container
+	height: 100vh
+	position: relative
+	overflow: hidden
+	transition-duration: $drawers_transition_duration
+	// padding-left: 0
+	// padding-right: 0
+	&.drawer__opened_right
+		padding-left: get_w($drawers_left_width)
+	&.drawer__opened_left
+		padding-right: get_w($drawers_right_width)
+.drawer__left
+	position: absolute
+	top: 0
+	left: get_w(-$drawers_left_width)
+	bottom: 0
+	height: 100%
+	+grid($drawers_left_width)
+	background-color: $drawers_left_bg_color
+	transition-duration: $drawers_transition_duration
+	.drawer__opened_left &
+		left: 0
+.drawer__center
+	height: 100%
+	width: 100%
+	overflow-y: auto
+.drawer__right
+	position: absolute
+	top: 0
+	right: get_w(-$drawers_right_width)
+	bottom: 0
+	height: 100%
+	background-color: $drawers_right_bg_color
+	transition-duration: $drawers_transition_duration
+	+grid($drawers_right_width)
+	.drawer__opened_right &
+		right: 0
+.drawer__toggle
+	position: absolute
+	top: 50%
+	padding: 15px
+	color: #fff
+	background-color: rgb(0, 0, 0)
+.drawer__toggle_left
+	left: 100%
+	border-radius: 0 100% 100% 0
+.drawer__toggle_right
+	right: 100%
+	border-radius: 100% 0 0 100%
