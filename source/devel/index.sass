@@ -4,39 +4,13 @@ body
 	margin: 0
 *
 	box-sizing: border-box
-#create
+	font-family: "Ubuntu-R"
 
 @import "./_module/_font/_font"
 @import "./_module/_grid/_grid"
 @import "./_layout/_drawers/_drawers"
 @import "./_layout/_sidebars/_sidebars"
-
-
-
-
-#wrapper
-	+container
-	height: 100vh
-#menu
-	+grid(3)
-	height: 100%
-	background-color: rgb(59, 59, 59)
-	color: #fff
-	li.focus
-		color: #ff3f25
-		ul
-			color: #fff
-#content
-	+grid(9)
-	height: 100%
-#create
-	position: fixed
-	top: 20px
-	right: 50%
-	button
-		padding: 10px
-		margin: 3px
-	.create_folder
-	.del_folder
-	.create_file
-	.del_file
+@import "./_layout/_logo/_logo"
+@import "./_layout/_menu/_menu"
+@import "./_layout/_directory_management/_directory_management"
+@import "./_layout/_directory_edit/_directory_edit"

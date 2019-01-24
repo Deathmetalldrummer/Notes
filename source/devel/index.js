@@ -1,6 +1,4 @@
 //#include("./_layout/_drawers/_drawers.js");
-//#include("./_layout/_header/_header.js");
-//#include("./_layout/_footer/_footer.js");
 
 // Конструктор директорий
 function folder(obj) {
@@ -242,7 +240,7 @@ function focus() {
 	$('.file').on('click', function(e) {
 		$('#menu .focus').removeClass('focus');
 		$(e.target).addClass('focus');
-		$('#content').html(cryptoOut(finder($('#menu .focus').data('id')).content));
+		$('.drawer__center').html(cryptoOut(finder($('#menu .focus').data('id')).content));
 
 	})
 	$('.folder').on('click', function(e) {
