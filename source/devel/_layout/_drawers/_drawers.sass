@@ -11,9 +11,9 @@ $drawers_right_bg_color: $drawers_left_bg_color
 	transition-duration: $drawers_transition_duration
 	// padding-left: 0
 	// padding-right: 0
-	&.drawer__opened_right
-		padding-left: get_w($drawers_left_width)
 	&.drawer__opened_left
+		padding-left: get_w($drawers_left_width)
+	&.drawer__opened_right
 		padding-right: get_w($drawers_right_width)
 .drawer__left
 	position: absolute
