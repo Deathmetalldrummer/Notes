@@ -1,8 +1,45 @@
-.menu,ul
-	padding-left: 1rem
+.menu,
+.menu_sub
+	padding-left: 1.8rem
 	list-style: none
-	li
-		padding: 4px 5px
-		a
-			color: #fff
-			text-decoration: none
+.menu_sub
+	// padding-top: 0.5rem
+	padding-bottom: 0.5rem
+.menu__
+.menu__focused
+	color: #e83100 !important
+	.menu__icon
+		fill: #e83100
+.menu__folder
+.menu__file
+
+.menu__link
+	padding: 4px 5px
+	color: #fff
+	text-decoration: none
+	display: block
+	&:hover
+		color: #e83100
+		svg
+			fill: #e83100
+.menu__link_folder
+.menu__link_file
+
+.menu__icon
+	height: 1em
+	fill: #fff
+	margin-right: 0.6em
+	// display: inline-block
+	// vertical-align: bottom
+.menu__icon_folder
+.menu__icon_file
+	margin-right: 0.7em
+
+.menu__text
+.menu__text_folder
+.menu__text_file
+
+
+.menu__icon,.menu__text
+	display: inline-block
+	vertical-align: baseline

@@ -1,3 +1,4 @@
+//#include("./_layout/_menu/_menu.js");
 //#include("./_layout/_drawers/_drawers.js");
 
 // Конструктор директорий
@@ -206,47 +207,7 @@ function set_local() {
 
 
 function create_menu() {
-	$('#menu').html(menu_result(arch));
-	focus();
-}
-// возвращает строку из тэгов
-function menu_result(x) {
-	var res = $('<ul></ul>');
-	// перебираем пункты списка
-	for (var i = 0; i < x.folders.length; i++) {
-		// var subarch_res = $('<ul></ul>');
-		var x_item = x.folders[i];
-		// если есть подменю, запускает рекурсию и записывает результат в переменную
-		if ($.isArray(x.folders)) {
-			// формирует результат
-			var focus_class = ($('#menu .folder.focus').data('id') === x_item.id) ? 'focus' : '';
-			res.append($('<li class="folder '+focus_class+'" data-id=' + x_item.id + ' data-type="folder">' + x_item.name + '</li>').append(menu_result(x_item)));
-		}
-	}
-	for (var i = 0; i < x.files.length; i++) {
-		var x_item = x.files[i];
-		// если есть подменю, запускает рекурсию и записывает результат в переменную
-		if ($.isArray(x.files)) {
-			// формирует результат
-			var focus_class = ($('#menu .file.focus').data('id') === x_item.id) ? 'focus' : '';
-			res.append($('<li class="file '+focus_class+'" data-id=' + x_item.id + ' data-type="file">' + x_item.name + '</li>'));
-		}
-	}
-	// возвращает результат
-	return res;
-}
-
-function focus() {
-	$('.file').on('click', function(e) {
-		$('#menu .focus').removeClass('focus');
-		$(e.target).addClass('focus');
-		$('.drawer__center').html(cryptoOut(finder($('#menu .focus').data('id')).content));
-
-	})
-	$('.folder').on('click', function(e) {
-		$('#menu .focus').removeClass('focus');
-		$(e.target).addClass('focus');
-	});
+	new Menu(arch).createMenu();
 }
 function focus_event() {
 	$('.create_folder').on('click', function(e) {
