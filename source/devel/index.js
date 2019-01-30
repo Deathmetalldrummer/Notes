@@ -105,6 +105,58 @@ function is_Numeric(x) {
 	return $.isNumeric(x);
 }
 
+function get_local() {
+	var string_local = localStorage.getItem(localStorage_object_name);
+	if (string_local) {
+		arch = JSON.parse(string_local);
+	} else {
+		arch.folders = [];
+		arch.files = [];
+		arch.id_list = [];
+	}
+}
+function set_local() {
+	localStorage.setItem(localStorage_object_name, JSON.stringify(arch));
+}
+
+
+function create_menu() {
+	new Menu(arch).createMenu();
+}
+
+
+
+
+
+
+// DM
+function focus_event() {
+	$('.dm__add_folder').on('click', function(e) {
+		if ($('#menu .menu__link_folder').hasClass('menu__focused')) {
+			createFolder($('#menu .menu__link_folder.menu__focused').data('id'));
+		} else {
+			createFolder();
+		}
+	});
+	$('.dm__remove_folder').on('click', function(e) {
+		if ($('#menu .menu__link_folder').hasClass('menu__focused')) {
+			delFolder($('#menu .menu__link_folder.menu__focused').data('id'));
+		}
+	});
+	$('.dm__add_file').on('click', function(e) {
+		if ($('#menu .menu__link_folder').hasClass('menu__focused')) {
+			createFile($('#menu .menu__link_folder.menu__focused').data('id'));
+		} else {
+			createFile();
+		}
+	});
+	$('.dm__remove_file').on('click', function(e) {
+		if ($('#menu .menu__link_file').hasClass('menu__focused')) {
+			delFile($('#menu .menu__link_file.menu__focused').data('id'));
+		}
+	});
+}
+
 //Создает файл
 function createFile(parent_id) {
 	var x = (parent_id>=0) ? finder(parent_id) : arch;
@@ -190,51 +242,11 @@ function removeId(id) {
 	}
 }
 
-function get_local() {
-	var string_local = localStorage.getItem(localStorage_object_name);
-	if (string_local) {
-		arch = JSON.parse(string_local);
-	} else {
-		arch.folders = [];
-		arch.files = [];
-		arch.id_list = [];
-	}
-}
-function set_local() {
-	localStorage.setItem(localStorage_object_name, JSON.stringify(arch));
-}
 
 
 
-function create_menu() {
-	new Menu(arch).createMenu();
-}
-function focus_event() {
-	$('.create_folder').on('click', function(e) {
-		if ($('#menu .folder').hasClass('focus')) {
-			createFolder($('#menu .folder.focus').data('id'));
-		} else {
-			createFolder();
-		}
-	});
-	$('.del_folder').on('click', function(e) {
-		if ($('#menu .folder').hasClass('focus')) {
-			delFolder($('#menu .folder.focus').data('id'));
-		}
-	});
-	$('.create_file').on('click', function(e) {
-		if ($('#menu .folder').hasClass('focus')) {
-			createFile($('#menu .folder.focus').data('id'));
-		} else {
-			createFile();
-		}
-	});
-	$('.del_file').on('click', function(e) {
-		if ($('#menu .file').hasClass('focus')) {
-			delFile($('#menu .file.focus').data('id'));
-		}
-	});
-}
+
+// FILE EDIT
 function cryptoIn() {
 	return utf8_to_b64($('#menu').html());
 }

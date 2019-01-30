@@ -24,7 +24,7 @@ function Menu(param) {
 	}
 	// Ужос
 	function menu__li(obj) {
-		var focus_class = ($('#menu .menu__.menu__focused').data('id') === obj.id) ? ' menu__focused' : '';
+		var focus_class = ($('#menu .menu__link.menu__focused').data('id') === obj.id) ? ' menu__focused' : '';
 		var li = $('<li class="menu__ menu__' + obj.type + '"></li>');
 		var link = $('<a class="menu__link menu__link_' + obj.type + focus_class + '" data-id=' + obj.id + ' href="#">' + obj.name + '</a>');
 		link.prepend(svg_icon(obj.type));
