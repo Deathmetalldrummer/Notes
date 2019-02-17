@@ -45,7 +45,7 @@ var arch = {
 	add: function(obj) {
 		obj = JSON.parse(JSON.stringify(obj));
 		obj.id = this._create_id();
-		var obj_parent = (is_Numeric(obj.parent_id)) ? this._find(obj.parent_id) : this.data;
+		var obj_parent = (is_Numeric(obj.parent_id)) ? this.find(obj.parent_id) : this.data;
 
 		if (obj.type && obj.type === 'file') {
 			if (obj_parent.files) {
@@ -62,8 +62,8 @@ var arch = {
 	},
 	remove: function(id) {
 		if (id === 0 || id > 0) {
-			var obj = this._find(id);
-			var obj_parent = (is_Numeric(obj.parent_id)) ? this._find(obj.parent_id) : this.data;
+			var obj = this.find(id);
+			var obj_parent = (is_Numeric(obj.parent_id)) ? this.find(obj.parent_id) : this.data;
 			var eq;
 			for (var i = 0; i < obj_parent[obj.type + 's'].length; i++) {
 				if (obj_parent[obj.type + 's'][i].id === obj.id) {
@@ -81,7 +81,7 @@ var arch = {
 	Ищет объект со свойством "id" и значением id (первый параметр)
 	Возвращает объект
 	*/
-	_find: function(id) {
+	find: function(id) {
 		var res;
 
 		req(this.data);

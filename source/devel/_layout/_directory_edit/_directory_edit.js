@@ -16,14 +16,21 @@ var de = {
 		this.$check.on('click',this.checkFile.bind(this));
 	},
 	editFile: function(e) {
-		this.$textarea.val('edit!');
+		var file = arch.find(menu.focus());
+		if (file.type === 'file') {
+			this.$textarea.val(cryptoOut(file.content));
+		}
 	},
 	checkFile: function(e) {
-		this.$content.html(this.$textarea.val());
-		this.$textarea.val('');
+		var file = arch.find(menu.focus());
+		if (file.type === 'file') {
+			var toContent = this.$textarea.val();
+			file.content = cryptoIn(toContent);
+			this.$textarea.val('');
+		}
 	}
 }
-de.init();
+
 
 
 // var _de = (function() {

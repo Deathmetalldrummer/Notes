@@ -1,12 +1,13 @@
 //#include("./_db.js");
 //#include("./_layout/_menu/_menu.js");
-//#include1("./_layout/_directory_edit/_directory_edit.js");
+//#include("./_layout/_directory_edit/_directory_edit.js");
 //#include("./_layout/_directory_management/_directory_management.js");
 
 $(document).ready(function() {
 	arch.init();
 	menu.init();
 	dm.init();
+	de.init();
 });
 
 // Конструктор директорий
@@ -45,16 +46,17 @@ function is_Numeric(x) {
 
 
 // FILE EDIT
-function cryptoIn() {
-	return utf8_to_b64($('#menu').html());
+function cryptoIn(x) {
+	return utf8_to_b64(x);
 }
 function cryptoOut(x) {
 	return b64_to_utf8(x);
 }
 function utf8_to_b64(str) {
-	return window.btoa(unescape(encodeURIComponent(str)));
+	// return window.btoa(unescape(encodeURIComponent(str)));
+	return window.btoa(str);
 }
 //декодирование строки из base-64 в Unicode
 function b64_to_utf8(str) {
-	return decodeURIComponent(escape(window.atob(str)));
+	return window.atob(str);
 }
