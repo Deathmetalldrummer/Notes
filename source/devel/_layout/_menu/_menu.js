@@ -11,6 +11,7 @@ var menu = {
 	_cacheDom: function() {
 		this.$menu = $('#menu');
 		this.$li = this.$menu.find('.menu__link')
+		this.$content = $('.drawer__center');
 	},
 	_events: function() {
 		var _this = this;
@@ -19,10 +20,19 @@ var menu = {
 				$('#menu .menu__focused').removeClass('menu__focused');
 				_this._focus = $(e.target);
 				$(e.target).addClass('menu__focused');
+
+				_this._show_content(e)
 			} else {
+				_this._focus = null;
 				$('#menu .menu__focused').removeClass('menu__focused');
 			}
 		});
+	},
+	_show_content: function(e) {
+		var file = arch.find(this.focus());
+		if (file && file.type === 'file') {
+			this.$content.html(cryptoOut(file.content));
+		}
 	},
 	_svg_icon: function(type) {
 		if (type === 'folder') {

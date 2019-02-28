@@ -17,16 +17,17 @@ var de = {
 	},
 	editFile: function(e) {
 		var file = arch.find(menu.focus());
-		if (file.type === 'file') {
+		if (file && file.type === 'file') {
 			this.$textarea.val(cryptoOut(file.content));
 		}
 	},
 	checkFile: function(e) {
 		var file = arch.find(menu.focus());
-		if (file.type === 'file') {
+		if (file && file.type === 'file') {
 			var toContent = this.$textarea.val();
 			file.content = cryptoIn(toContent);
 			this.$textarea.val('');
+			menu._show_content();
 		}
 	}
 }

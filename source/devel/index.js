@@ -26,7 +26,7 @@ function file(obj) {
 	this.name = obj.name || "File name";
 	this.desc = obj.desc || "File desc";
 	this.image = obj.image || "File image";
-	this.content = obj.content || "File content";
+	this.content = obj.content || "PGgxPkhlbGxvLHdvcmxkITwvaDE+";
 	this.parent_id = obj.parent_id;
 }
 
