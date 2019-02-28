@@ -8,6 +8,7 @@ $(document).ready(function() {
 	menu.init();
 	dm.init();
 	de.init();
+	//#include("./_layout/_drawers/_drawers.js");
 });
 
 // Конструктор директорий
