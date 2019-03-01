@@ -127,7 +127,7 @@ gulp.task('JavaScript', function() {
 gulp.task('copy:font', function() {
 	return gulp.src(devel + '**/*.{woff,woff2,ttf}')
 	.on('data',function(file){
-			file.path = file.path.replace('_module\\','').replace('_font','fonts');
+			file.path = file.path.replace('_module/','').replace('_module\\','').replace('_font','fonts');
 	})
 	.pipe(gulp.dest(build))
 });
