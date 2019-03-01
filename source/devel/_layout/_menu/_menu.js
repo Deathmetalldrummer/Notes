@@ -6,7 +6,7 @@ MENU
 	focus - возвращает либо пункт,либо id пункта
 */
 var menu = {
-	_arch: JSON.parse(localStorage.getItem('arch')),
+	_arch: null,
 	_focus: $('#menu .menu__link.menu__focused').length ? $('#menu .menu__link.menu__focused') : null,
 	_cacheDom: function() {
 		this.$menu = $('#menu');
@@ -45,12 +45,12 @@ var menu = {
 	_render: function() {
 		var div = $('<div></div>');
 		var _this = this;
-		if (this._arch.folders && this._arch.folders.length) {
+		if (this._arch && this._arch.folders && this._arch.folders.length) {
 			$.each(this._arch.folders, function(i, val) {
 				div.append(_this._menu__li(val));
 			});
 		}
-		if (this._arch.files && this._arch.files.length) {
+		if (this._arch && this._arch.files && this._arch.files.length) {
 			$.each(this._arch.files, function(i, val) {
 				div.append(_this._menu__li(val));
 			});
@@ -84,6 +84,7 @@ var menu = {
 		return li;
 	},
 	init: function() {
+		this._arch = arch.data;
 		this._cacheDom();
 		this._render();
 		this._events();

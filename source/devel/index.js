@@ -4,11 +4,23 @@
 //#include("./_layout/_directory_management/_directory_management.js");
 
 $(document).ready(function() {
-	arch.init();
-	menu.init();
-	dm.init();
-	de.init();
-	//#include("./_layout/_drawers/_drawers.js");
+	$.ajax({
+		url: './arch.json',
+		success: function(data){
+			localStorage.setItem('archJSON',JSON.stringify(data));
+		},
+		error: function() {
+			console.log('Cорян,тут ничё нету.');
+		},
+		complete:function() {
+			arch.init();
+			menu.init();
+			dm.init();
+			de.init();
+			//#include("./_layout/_drawers/_drawers.js");
+		}
+	});
+
 });
 
 // Конструктор директорий
