@@ -7,35 +7,24 @@ var dm = {
 		this.$dm = $('.directory_management');
 		this.$add_file = this.$dm.find('.dm__add_file');
 		this.$add_folder = this.$dm.find('.dm__add_folder');
-		this.$remove_file = this.$dm.find('.dm__remove_file');
-		this.$remove_folder = this.$dm.find('.dm__remove_folder');
-
+		this.$remove = this.$dm.find('.dm__edit_remove');
+		this.$edit = this.$dm.find('.dm__edit_edit');
 		this.$menu = $('#menu');
 	},
 	events: function() {
-		this.$add_file.on('click',this.addFile.bind(this));
-		this.$add_folder.on('click',this.addFolder.bind(this));
-		this.$remove_file.on('click',this.remove.bind(this));
-		this.$remove_folder.on('click',this.remove.bind(this));
-	},
-	addFile: function() {
-		var id = menu.focus();
-		var obj = new file({
-			parent_id: id
-		})
-		arch.add(obj);
-		menu.add();
-	},
-	addFolder: function() {
-		var id = menu.focus();
-		var obj = new folder({
-			parent_id: id
-		})
-		menu.add(arch.add(obj));
+		this.$add_file.on('click',nn.addIdFile.bind(nn));
+		this.$add_folder.on('click',nn.addIdFolder.bind(nn));
+		this.$remove.on('click',this.remove.bind(this));
+		this.$edit.on('click',this.rename.bind(this));
 	},
 	remove: function() {
 		var id = menu.focus();
 		arch.remove(id);
 		menu.remove();
+	},
+	rename: function() {
+		if (menu.focus() === 0 || menu.focus() > 0) {
+			nn.typeRename()
+		}
 	}
 }

@@ -16,11 +16,11 @@ var menu = {
 	_events: function() {
 		var _this = this;
 		$('#menu').on('click', function(e) {
-			if ($(e.target).hasClass('menu__link')) {
+			if ($(e.target).hasClass('menu__link') || $(e.target).closest('.menu__link')) {
 				$('#menu .menu__focused').removeClass('menu__focused');
-				_this._focus = $(e.target);
-				$(e.target).addClass('menu__focused');
-
+				_this._focus = $(e.target).closest('.menu__link');
+				_this._focus.addClass('menu__focused');
+				console.log(_this._focus.data('id'));
 				_this._show_content(e)
 			} else {
 				_this._focus = null;
@@ -95,9 +95,14 @@ var menu = {
 	},
 	remove: function() {
 		this._arch = JSON.parse(localStorage.getItem('arch'));
+		this._focus = null;
 		this._render();
 	},
-	rename: function() {},
+	rename: function() {
+		this._arch = JSON.parse(localStorage.getItem('arch'));
+		this._focus = null;
+		this._render();
+	},
 	focus: function() {
 		return this._focus ? this._focus.data('id') : null;
 	}

@@ -2,6 +2,7 @@
 //#include("./_layout/_menu/_menu.js");
 //#include("./_layout/_directory_edit/_directory_edit.js");
 //#include("./_layout/_directory_management/_directory_management.js");
+//#include("./_layout/_new_name/_new_name.js");
 
 $(document).ready(function() {
 	$.ajax({
@@ -17,6 +18,7 @@ $(document).ready(function() {
 			menu.init();
 			dm.init();
 			de.init();
+			nn.init()
 			//#include("./_layout/_drawers/_drawers.js");
 		}
 	});
@@ -66,10 +68,11 @@ function cryptoOut(x) {
 	return b64_to_utf8(x);
 }
 function utf8_to_b64(str) {
-	// return window.btoa(unescape(encodeURIComponent(str)));
-	return window.btoa(str);
+	return window.btoa(unescape(encodeURIComponent(str)));
+	// return window.btoa(str);
 }
 //декодирование строки из base-64 в Unicode
 function b64_to_utf8(str) {
-	return window.atob(str);
+	return decodeURIComponent(escape(window.atob(str)))
+	// return window.atob(str);
 }

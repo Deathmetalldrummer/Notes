@@ -27,7 +27,7 @@ var arch = {
 		} else {
 			localStorage.setItem('arch', JSON.stringify(this.data));
 		}
-		this.data = JSON.parse(JSON.stringify(this.data))
+		this.data = JSON.parse(JSON.stringify(this.data));
 	},
 	_create_id: function() {
 		var id_length = this.data.id_list.length;
@@ -40,13 +40,41 @@ var arch = {
 	},
 	_remove_id: function(id) {
 		var id_list = this.data.id_list;
-		id_list.splice(id_list.indexOf(id),1);
+		var lI = this.findID(id);
+		for (var i = 0; i < lI.length; i++) {
+			id_list.splice(id_list.indexOf(lI[i]),1);
+		}
+	},
+	findID: function(id) {
+		var obj = this.find(id);
+		var fileIDList = [];
+		var folderIDList = [];
+		findIDFile(obj);
+		findIDFolder(obj);
+		var res = fileIDList.concat(folderIDList);
+		res.push(id);
+		function findIDFile(prop) {
+			if (prop.files && prop.files.length) {
+				for (var i = 0; i < prop.files.length; i++) {
+					fileIDList.push(prop.files[i].id);
+				}
+			}
+		}
+		function findIDFolder(prop) {
+			if (prop.folders && prop.folders.length) {
+				for (var i = 0; i < prop.folders.length; i++) {
+					folderIDList.push(prop.folders[i].id);
+					findIDFile(prop.folders[i]);
+					findIDFolder(prop.folders[i])
+				}
+			}
+		}
+		return res;
 	},
 	add: function(obj) {
 		obj = JSON.parse(JSON.stringify(obj));
 		obj.id = this._create_id();
 		var obj_parent = (is_Numeric(obj.parent_id)) ? this.find(obj.parent_id) : this.data;
-
 		if (obj.type && obj.type === 'file') {
 			if (obj_parent.files) {
 				obj_parent.files.push(obj);
@@ -73,6 +101,13 @@ var arch = {
 			}
 			this._remove_id(id);
 			obj_parent[obj.type + 's'].splice(eq,1);
+			this._set_local();
+		}
+	},
+	rename: function(id,newName) {
+		if (id === 0 || id > 0) {
+			var obj = this.find(id);
+			obj.name = newName;
 			this._set_local();
 		}
 	},
