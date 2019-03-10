@@ -8,7 +8,8 @@ var de = {
 		this.$edit = this.$de.find('.de__edit_');
 		this.$check = this.$de.find('.de__check_');
 
-		this.$textarea = $('.content__textarea');
+		this.$textarea_html = $('#tabs_content').find('.tabs__html textarea');
+		this.$textarea_md = $('#tabs_content').find('.tabs__md textarea');
 		this.$content = $('.drawer__center');
 	},
 	events: function() {
@@ -18,16 +19,22 @@ var de = {
 	editFile: function(e) {
 		var file = arch.find(menu.focus());
 		if (file && file.type === 'file') {
-			this.$textarea.val(cryptoOut(file.content));
+			this.$textarea_html.val(cryptoOut(file.content.html));
+			this.$textarea_md.val(cryptoOut(file.content.md));
+			arch._set_local();
 		}
 	},
 	checkFile: function(e) {
 		var file = arch.find(menu.focus());
 		if (file && file.type === 'file') {
-			var toContent = this.$textarea.val();
-			file.content = cryptoIn(toContent);
-			this.$textarea.val('');
+			var toContentHtml = this.$textarea_html.val();
+			var toContentMd = this.$textarea_md.val();
+			file.content.html = cryptoIn(toContentHtml);
+			file.content.md = cryptoIn(toContentMd);
+			this.$textarea_html.val('');
+			this.$textarea_md.val('');
 			menu._show_content();
+			arch._set_local();
 		}
 	}
 }

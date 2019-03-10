@@ -3,6 +3,7 @@
 //#include("./_layout/_directory_edit/_directory_edit.js");
 //#include("./_layout/_directory_management/_directory_management.js");
 //#include("./_layout/_new_name/_new_name.js");
+//#include("./_layout/_tabs/_tabs.js");
 
 $(document).ready(function() {
 	$.ajax({
@@ -41,7 +42,10 @@ function file(obj) {
 	this.name = obj.name || "File name";
 	this.desc = obj.desc || "File desc";
 	this.image = obj.image || "File image";
-	this.content = obj.content || "PGgxPkhlbGxvLHdvcmxkITwvaDE+";
+	this.content = {
+		html: obj.html || "PGgxPkhlbGxvLHdvcmxkITwvaDE+",
+		md: obj.md || 'IyBIZWxsbyx3b3JsZCE='
+	}
 	this.parent_id = obj.parent_id;
 }
 

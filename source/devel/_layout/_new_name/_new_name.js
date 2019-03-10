@@ -20,7 +20,7 @@ var nn = {
 	},
 	submit: function() {
 		var type = this.$newName.attr('data-type');
-		console.log('WTF?',type);
+
 		if (type === 'file') {
 			this.addFile();
 		}

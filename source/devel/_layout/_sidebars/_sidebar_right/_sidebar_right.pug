@@ -1,8 +1,12 @@
 extends ../_sidebars
 
 block sidebar__header
-	header header
+	include ../../_tabs/_tabs
 block sidebar__body
-	textarea.content__textarea
+	.tabs.tabs_content#tabs_content
+		.tabs__.tabs__html.tabs_active
+			textarea
+		.tabs__.tabs__md
+			textarea
 block sidebar__footer
 	include ../../_directory_edit/_directory_edit

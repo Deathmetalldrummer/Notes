@@ -20,18 +20,27 @@ var menu = {
 				$('#menu .menu__focused').removeClass('menu__focused');
 				_this._focus = $(e.target).closest('.menu__link');
 				_this._focus.addClass('menu__focused');
-				console.log(_this._focus.data('id'));
+
 				_this._show_content(e)
 			} else {
 				_this._focus = null;
 				$('#menu .menu__focused').removeClass('menu__focused');
 			}
 		});
+
+		$('.menu__folder').on('dblclick',function(e) {
+			var accordion = $(this).find('.menu__focused').siblings('.menu_sub');
+			if (accordion.hasClass('menu_sub__close')) {
+				accordion.removeClass('menu_sub__close')
+			} else {
+				accordion.addClass('menu_sub__close')
+			}
+		})
 	},
 	_show_content: function(e) {
 		var file = arch.find(this.focus());
 		if (file && file.type === 'file') {
-			this.$content.html(cryptoOut(file.content));
+			this.$content.html(cryptoOut(file.content.html));
 		}
 	},
 	_svg_icon: function(type) {
@@ -65,7 +74,7 @@ var menu = {
 		var link = $('<a class="menu__link menu__link_' + obj.type + focus_class + '" data-id=' + obj.id + ' href="#">' + obj.name + '</a>');
 		link.prepend(menu._svg_icon(obj.type));
 		li.append(link);
-		// console.log(123, this);
+
 		var ul = $('<ul class="menu_sub"></ul>');
 		if (obj.folders && obj.folders.length) {
 			$.each(obj.folders, function(i, val) {

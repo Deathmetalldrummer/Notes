@@ -1,0 +1,32 @@
+.tabs
+.tabs_link
+	display: flex
+	flex-flow: row nowrap
+	.tabs__
+		border-bottom: 2px solid transparent
+		flex-grow: 1
+		text-align: center
+		padding: 0.5em 1em
+		cursor: pointer
+	.tabs__+.tabs__
+		border-left: 1px solid #3b3b3b
+	.tabs__html
+	.tabs__md
+	.tabs_active
+		cursor: default
+		border-bottom-color: #e83100
+.tabs_content
+	width: 100%
+	.tabs__
+		height: 100%
+		display: none
+	.tabs_active
+		display: block
+	textarea
+		width: 100%
+		height: 100%
+		resize: none
+		border: none
+		border-radius: 10px
+		padding: 10px
+		outline: none
