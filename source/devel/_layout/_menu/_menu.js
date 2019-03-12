@@ -98,14 +98,14 @@ var menu = {
 	_onFocus: function(e){
 		//add set focus method and remove focus method
 		if ($(e.target).hasClass(this.menu_link_class) || $(e.target).closest('.'+this.menu_link_class)) {
-			this.menu.find('.'+this.menu_focused_class).removeClass(this.menu_focused_class);
+			this.$menu.find('.'+this.menu_focused_class).removeClass(this.menu_focused_class);
 			this._focus = $(e.target).closest('.'+this.menu_link_class);
 			this._focus.addClass(this.menu_focused_class);
 
 			this._show_content(e)
 		} else {
 			this._focus = null;
-			this.menu.find('.'+this.menu_focused_class).removeClass(this.menu_focused_class);
+			this.$menu.find('.'+this.menu_focused_class).removeClass(this.menu_focused_class);
 		}
 	},
 	_onCollapse: function(){
