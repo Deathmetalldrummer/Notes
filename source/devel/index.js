@@ -9,7 +9,9 @@ $(document).ready(function() {
 	$.ajax({
 		url: './arch.json',
 		success: function(data){
-			localStorage.setItem('archJSON',JSON.stringify(data));
+			if (!localStorage.getItem('arch')){
+				localStorage.setItem('arch',JSON.stringify(data));
+			}
 		},
 		error: function() {
 			console.log('Cорян,тут ничё нету.');

@@ -10,7 +10,7 @@ var arch = {
 		this._get_local();
 	},
 	_get_local: function() {
-		var string_local = localStorage.getItem('arch') ? localStorage.getItem('arch') : localStorage.getItem('archJSON');
+		var string_local = localStorage.getItem('arch');
 		var new_arch = {};
 		if (string_local) {
 			new_arch = JSON.parse(string_local);
