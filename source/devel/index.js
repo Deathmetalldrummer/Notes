@@ -17,6 +17,7 @@ $(document).ready(function() {
 		complete:function() {
 			arch.init();
 			menu.init();
+			tabs.init();
 			dm.init();
 			de.init();
 			nn.init()
