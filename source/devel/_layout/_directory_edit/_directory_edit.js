@@ -10,13 +10,12 @@ var de = {
 
 		this.$textarea_html = $('#tabs_content').find('.tabs__html textarea');
 		this.$textarea_md = $('#tabs_content').find('.tabs__md textarea');
-		this.$content = $('.drawer__center');
 	},
 	events: function() {
 		this.$edit.on('click',this.editFile.bind(this));
 		this.$check.on('click',this.checkFile.bind(this));
 	},
-	editFile: function(e) {
+	editFile: function() {
 		var file = arch.find(menu.focus());
 		if (file && file.type === 'file') {
 			this.$textarea_html.val(cryptoOut(file.content.html));
@@ -24,13 +23,11 @@ var de = {
 			arch._set_local();
 		}
 	},
-	checkFile: function(e) {
+	checkFile: function() {
 		var file = arch.find(menu.focus());
 		if (file && file.type === 'file') {
-			var toContentHtml = this.$textarea_html.val();
-			var toContentMd = this.$textarea_md.val();
-			file.content.html = cryptoIn(toContentHtml);
-			file.content.md = cryptoIn(toContentMd);
+			file.content.html = cryptoIn(this.$textarea_html.val());
+			file.content.md = cryptoIn(this.$textarea_md.val());
 			this.$textarea_html.val('');
 			this.$textarea_md.val('');
 			menu._show_content();
