@@ -28,13 +28,9 @@ var menu = {
 			}
 		});
 
-		$('.menu__folder').on('dblclick',function(e) {
-			var accordion = $(this).find('.menu__focused').siblings('.menu_sub');
-			if (accordion.hasClass('menu_sub__close')) {
-				accordion.removeClass('menu_sub__close')
-			} else {
-				accordion.addClass('menu_sub__close')
-			}
+		$('.menu__link_folder').on('dblclick',function() {
+			var accordion = $(this).siblings('.menu_sub');
+			accordion.slideToggle();
 		})
 	},
 	_show_content: function(e) {
@@ -96,7 +92,6 @@ var menu = {
 		this._arch = arch.data;
 		this._cacheDom();
 		this._render();
-		this._events();
 	},
 	add: function(obj) {
 		this._arch = JSON.parse(localStorage.getItem('arch'));
