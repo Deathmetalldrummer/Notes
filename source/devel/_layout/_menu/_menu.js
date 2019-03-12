@@ -11,27 +11,15 @@ var menu = {
 	_cacheDom: function() {
 		this.$menu = $('#menu');
 		this.$li = this.$menu.find('.menu__link')
+		this.$li_folder = this.$menu.find('.menu__link_folder');
 		this.$content = $('.drawer__center');
+		this.sub_menu_class = '.menu_sub';
+		this.menu_focused_class = 'menu__focused';
+		this.menu_link_class = 'menu__link';
 	},
 	_events: function() {
-		var _this = this;
-		$('#menu').on('click', function(e) {
-			if ($(e.target).hasClass('menu__link') || $(e.target).closest('.menu__link')) {
-				$('#menu .menu__focused').removeClass('menu__focused');
-				_this._focus = $(e.target).closest('.menu__link');
-				_this._focus.addClass('menu__focused');
-
-				_this._show_content(e)
-			} else {
-				_this._focus = null;
-				$('#menu .menu__focused').removeClass('menu__focused');
-			}
-		});
-
-		$('.menu__link_folder').on('dblclick',function() {
-			var accordion = $(this).siblings('.menu_sub');
-			accordion.slideToggle();
-		})
+		this.$menu.on('click',this._onFocus.bind(this));
+		$('.menu__link_folder').on('dblclick',this._onCollapse)
 	},
 	_show_content: function(e) {
 		var file = arch.find(this.focus());
@@ -106,6 +94,23 @@ var menu = {
 		this._arch = JSON.parse(localStorage.getItem('arch'));
 		this._focus = null;
 		this._render();
+	},
+	_onFocus: function(e){
+		//add set focus method and remove focus method
+		if ($(e.target).hasClass(this.menu_link_class) || $(e.target).closest('.'+this.menu_link_class)) {
+			this.menu.find('.'+this.menu_focused_class).removeClass(this.menu_focused_class);
+			this._focus = $(e.target).closest('.'+this.menu_link_class);
+			this._focus.addClass(this.menu_focused_class);
+
+			this._show_content(e)
+		} else {
+			this._focus = null;
+			this.menu.find('.'+this.menu_focused_class).removeClass(this.menu_focused_class);
+		}
+	},
+	_onCollapse: function(){
+		var accordion = $(this).siblings(this.sub_menu_class);
+		accordion.slideToggle();
 	},
 	focus: function() {
 		return this._focus ? this._focus.data('id') : null;
