@@ -9,7 +9,6 @@ var dm = {
 		this.$add_folder = this.$dm.find('.dm__add_folder');
 		this.$remove = this.$dm.find('.dm__edit_remove');
 		this.$edit = this.$dm.find('.dm__edit_edit');
-		this.$menu = $('#menu');
 	},
 	events: function() {
 		this.$add_file.on('click',nn.addIdFile.bind(nn));
