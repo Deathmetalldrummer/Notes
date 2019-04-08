@@ -1,0 +1,31 @@
+html
+	font-size: 16px
+body
+	margin: 0
+*
+	box-sizing: border-box
+
+@import "./_module/_font/_font"
+@import "./_module/_grid/_grid"
+
+
+.modal
+	width: 100vw
+	height: 100vh
+	display: none
+	position: fixed
+	flex-flow: row nowrap
+	justify-content: center
+	align-items: center
+	&.modal_open
+		display: flex
+.modal_wrapper
+	background-color: #ccc
+	padding: 10px
+.modal__
+	margin: 1em
+.modal__header
+.modal__body
+.modal__footer
+.modal__cancel
+.modal__submit
