@@ -10,7 +10,7 @@ var modal = {
 		this.$modal__cancel.on('click',this.close.bind(this));
 	},
 	modalBodyRender: function() {
-		this.$modal__body.html(this.obj.html);
+		this.$modal__body.html(this.obj.modal__html);
 		this.$modal__submit.on('click',this.obj.submit)
 	},
 	open: function(obj) {
