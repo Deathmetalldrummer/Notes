@@ -1,17 +1,23 @@
 //#include("./_layout/_modal/_index.js");
 var link = {
-	modal__html: $('<input class="modal_href" type="text" placeholder="href"><br><input  class="modal_text" type="text" placeholder="text">'),
+	modal__html: $('<input class="modal_href" type="text" placeholder="href"><br><input  class="modal_text" type="text" placeholder="text"><br><input  class="modal_alt" type="text" placeholder="alt">'),
 	submit: function() {
 		var href = $('.modal_href').val();
 		var text = $('.modal_text').val();
-		this.html = $('<a href="' + href + '">' + text + '</a>');
-		this.md = '';
+		var alt = $('.modal_alt').val();
+
+		if (href[0] === '#') {
+			console.log('якорь!');
+		}
+		this.html = $('<a href="' + href + '" alt="'+alt+'">' + text + '</a>');
+		this.md = '['+text+']('+href+' "'+alt+'")';
 
 		$('.wrapper__body').append(this.html);
 	},
 	close: function() {
 		$('.modal_href').val('');
 		$('.modal_text').val('');
+		$('.modal_alt').val('');
 	}
 };
 var h$ = {
