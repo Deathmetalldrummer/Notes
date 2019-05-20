@@ -2,6 +2,7 @@ html
 	font-size: 16px
 body
 	margin: 0
+	padding: 0
 	font-family: "Ubuntu-R"
 *
 	box-sizing: border-box
@@ -16,6 +17,7 @@ body
 @import "./_layout/_directory_edit/_directory_edit"
 @import "./_layout/_new_name/_new_name"
 @import "./_layout/_tabs/_tabs"
+@import "./_layout/_mainMenu/_mainMenu"
 @import "./_github"
 @import "./_layout/_modal/_index"
 
@@ -24,12 +26,9 @@ body
 	min-width: 100vw
 	min-height: 100vh
 	display: flex
-	flex-flow: column nowrap
+	flex-flow: row nowrap
 	justify-content: stretch
 	align-items: stretch
-.wrapper__body
+.wrapper__menu
+.wrapper__drawers
 	flex-grow: 1
-	background-color: #cac9cd
-.wrapper__footer
-	padding: 10px
-	background-color: #555555

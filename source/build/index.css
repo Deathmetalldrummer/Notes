@@ -3,6 +3,7 @@ html {
 
 body {
   margin: 0;
+  padding: 0;
   font-family: "Ubuntu-R"; }
 
 * {
@@ -18,7 +19,7 @@ body {
 .drawers {
   font-size: 0;
   margin: auto;
-  height: 100vh;
+  height: 100%;
   position: relative;
   overflow: hidden;
   -webkit-transition-duration: 0.3s;
@@ -301,6 +302,26 @@ body {
     border-radius: 10px;
     padding: 10px;
     outline: none; }
+
+.mainMenu {
+  background-color: #111;
+  height: 100%; }
+
+.mainMenu__logo {
+  fill: #E95420;
+  color: #E95420; }
+
+.mainMenu__list {
+  margin: 0;
+  padding: 0; }
+
+.mainMenu__link {
+  color: #919191;
+  text-decoration: none; }
+  .mainMenu__link:hover {
+    color: #E95420; }
+  .mainMenu__link_active {
+    color: #fff; }
 
 .markdown-body .pl-c {
   color: #6a737d; }
@@ -775,10 +796,10 @@ body {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
+  -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
-  -ms-flex-flow: column nowrap;
-  flex-flow: column nowrap;
+  -ms-flex-flow: row nowrap;
+  flex-flow: row nowrap;
   -webkit-box-pack: stretch;
   -ms-flex-pack: stretch;
   justify-content: stretch;
@@ -786,12 +807,7 @@ body {
   -ms-flex-align: stretch;
   align-items: stretch; }
 
-.wrapper__body {
+.wrapper__drawers {
   -webkit-box-flex: 1;
   -ms-flex-positive: 1;
-  flex-grow: 1;
-  background-color: #cac9cd; }
-
-.wrapper__footer {
-  padding: 10px;
-  background-color: #555555; }
+  flex-grow: 1; }

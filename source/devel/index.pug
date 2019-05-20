@@ -9,7 +9,11 @@ html(lang="en")
 		link(rel="stylesheet", href="./index.css")
 		title Notes
 	body
-		include ./_layout/_drawers/_drawers
+		.wrapper
+			.wrapper__.wrapper__menu
+				include ./_layout/_mainMenu/_mainMenu
+			.wrapper__.wrapper__drawers
+				include ./_layout/_drawers/_drawers
 		include ./_layout/_new_name/_new_name
 		script(src='https://code.jquery.com/jquery-3.3.1.min.js')
 		script(src='./index.js')
