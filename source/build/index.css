@@ -305,7 +305,9 @@ body {
 
 .mainMenu {
   background-color: #111;
-  height: 100%; }
+  height: 100%;
+  width: 50px;
+  padding: 10px; }
 
 .mainMenu__logo {
   fill: #E95420;
@@ -313,15 +315,21 @@ body {
 
 .mainMenu__list {
   margin: 0;
-  padding: 0; }
+  padding: 1em 0 0 0; }
+
+.mainMenu__i + .mainMenu__i {
+  margin-top: 0.5em; }
 
 .mainMenu__link {
   color: #919191;
+  fill: #444;
   text-decoration: none; }
   .mainMenu__link:hover {
+    fill: #E95420;
     color: #E95420; }
   .mainMenu__link_active {
-    color: #fff; }
+    color: #fff;
+    fill: #fff; }
 
 .markdown-body .pl-c {
   color: #6a737d; }
